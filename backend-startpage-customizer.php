@@ -34,7 +34,7 @@ if (!class_exists( 'backend_startpage_customizer' ) ) {
      * Delete starpage metavalue from Usermeta for all Users.
      */
     function backend_startpage_customizer_uninstall() {
-        delete_option('backend_startpage');
+        $wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key = 'backend_startpage';" );
     }
 
     register_uninstall_hook( __FILE__,  'backend_startpage_customizer_uninstall' );
