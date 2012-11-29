@@ -52,6 +52,8 @@ class backend_startpage_customizer {
      * @return string
      */
     function redirect_user ($redirect_to, $request, $user ) {
+        if ( is_wp_error($user) ) // Wordpress login_redirect action is called without a user?
+            return $redirect_to;
         $backend_startpage = get_user_meta($user->ID, 'backend_startpage', true );
         if ($backend_startpage != '') {
             return ('wp-admin/'.$backend_startpage);
