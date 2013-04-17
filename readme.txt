@@ -4,7 +4,7 @@ Donate link: http://www.staude.net/donate
 Tags: backend, startpage, customize, redirect, options, profile
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 0.1
+Stable tag: 0.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,10 @@ Wähle das Projekt "WP Plugin: Backend Startpage Customizer" und trag deinen Wun
 
 
 == Changelog ==
+
+= 0.2 =
+0000020: add filter to change translations path
+0000026: correct translations to edit it with codestyling-localization
 
 = 0.1 =
 First version.

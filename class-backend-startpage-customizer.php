@@ -38,7 +38,7 @@ class backend_startpage_customizer {
      * load the plugin textdomain with translations
      */
     function load_translations() {
-        load_plugin_textdomain( 'backend-startpage-customizer', false, dirname( plugin_basename( __FILE__ )) . '/languages/'  ); 
+        load_plugin_textdomain( 'backend-startpage-customizer', false, apply_filters ( 'backend_startpage_customizer_translationpath', dirname( plugin_basename( __FILE__ )) . '/languages/' ) ); 
     }
     
     /**
