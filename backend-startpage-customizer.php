@@ -4,10 +4,9 @@ Plugin Name: Backend Startpage Customizer
 Plugin URI: http://www.staude.net/wordpress/plugins/BackendStartpageCustomizer
 Description: Redirect the user after login to a predetermined site in the backend. 
 Author: Frank Staude
-Version: 0.2
+Version: 0.3
 Author URI: http://www.staude.net/
-Compatibility: WordPress 3.5
-*/
+Compatibility: WordPress 3.6.1
 
 /*  Copyright 2012  Frank Staude  (email : frank@staude.net)
 
@@ -34,6 +33,7 @@ if (!class_exists( 'backend_startpage_customizer' ) ) {
      * Delete starpage metavalue from Usermeta for all Users.
      */
     function backend_startpage_customizer_uninstall() {
+        global $wpdb;
         $wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key = 'backend_startpage';" );
     }
 
