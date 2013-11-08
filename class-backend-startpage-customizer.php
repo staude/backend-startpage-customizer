@@ -37,7 +37,7 @@ class backend_startpage_customizer {
      * 
      * load the plugin textdomain with translations
      */
-    function load_translations() {
+    static public function load_translations() {
         load_plugin_textdomain( 'backend-startpage-customizer', false, apply_filters ( 'backend_startpage_customizer_translationpath', dirname( plugin_basename( __FILE__ )) . '/languages/' ) ); 
     }
     
@@ -51,7 +51,7 @@ class backend_startpage_customizer {
      * @param object $user
      * @return string
      */
-    function redirect_user ($redirect_to, $request, $user ) {
+    static public function redirect_user ($redirect_to, $request, $user ) {
         if ( is_wp_error($user) ) // Wordpress login_redirect action is called without a user?
             return $redirect_to;
         $backend_startpage = get_user_meta($user->ID, 'backend_startpage', true );
@@ -71,7 +71,7 @@ class backend_startpage_customizer {
      * @global array $submenu
      * @param object $user
      */
-    function user_startpage_option($user) {
+    static public function user_startpage_option($user) {
         global $menu, $submenu;
         
         $backend_startpage = get_user_meta( $user->ID, 'backend_startpage', true );
@@ -86,8 +86,8 @@ class backend_startpage_customizer {
                             <option value="<?php echo esc_attr( $menuentry[2] ); ?>"
                             <?php selected( $backend_startpage, $menuentry[2] ); ?>>
                             <?php echo esc_html( preg_replace("/<.*>/","", $menuentry[0]) ); ?>
-                            </option>                            
-                            <?php if ( is_array( $submenu[ $menuentry[ 2 ] ] ) ) { ?>
+                            </option>
+                            <?php if ( isset( $submenu[ $menuentry[ 2 ] ] ) && is_array( $submenu[ $menuentry[ 2 ] ] ) ) { ?>
                                 <?php foreach ( $submenu[ $menuentry[ 2 ] ] as $submenuentry ) { ?>
                                     <?php if ($submenuentry[0] != '') { ?>
                                         <option value="<?php echo esc_attr( $submenuentry[2] ); ?>"
@@ -115,7 +115,7 @@ class backend_startpage_customizer {
      * @param integer $user_id
      * @return void
      */
-    function update_startpage_option( $user_id ) {
+    static public function update_startpage_option( $user_id ) {
         if ( !current_user_can( 'edit_user', $user_id ) )
             return false;
         $startpage = ( $_POST['backend_startpage'] );
