@@ -25,11 +25,14 @@ class backend_startpage_customizer {
      * Register all actions and filters
      */
     function __construct() {
-        add_action( 'profile_personal_options', array( 'backend_startpage_customizer', 'user_startpage_option' ) );
-        add_action( 'personal_options_update',  array( 'backend_startpage_customizer', 'update_startpage_option' ) );
-        add_action( 'edit_user_profile_update', array( 'backend_startpage_customizer', 'update_startpage_option' ) );
-        add_action( 'plugins_loaded',           array( 'backend_startpage_customizer', 'load_translations' ) );
-        add_filter( 'login_redirect',           array( 'backend_startpage_customizer', 'redirect_user' ) , 10, 3 );
+        add_action( 'edit_user_profile',            array( 'backend_startpage_customizer', 'user_startpage_option' ) );
+        add_action( 'profile_personal_options',     array( 'backend_startpage_customizer', 'user_startpage_option' ) );
+        add_action( 'personal_options_update',      array( 'backend_startpage_customizer', 'update_startpage_option' ) );
+        add_action( 'edit_user_profile_update',     array( 'backend_startpage_customizer', 'update_startpage_option' ) );
+        add_action( 'plugins_loaded',               array( 'backend_startpage_customizer', 'load_translations' ) );
+        add_filter( 'login_redirect',               array( 'backend_startpage_customizer', 'redirect_user' ) , 10, 3 );
+        add_filter( 'manage_users_columns',         array( 'backend_startpage_customizer', 'add_user_list_url_head') );
+        add_filter( 'manage_users_custom_column',   array( 'backend_startpage_customizer', 'add_user_list_url_column'), 10, 3);
     }
     
     /**
@@ -71,7 +74,7 @@ class backend_startpage_customizer {
      * @global array $submenu
      * @param object $user
      */
-    static public function user_startpage_option($user) {
+    static public function user_startpage_option( $user ) {
         global $menu, $submenu;
         
         $backend_startpage = get_user_meta( $user->ID, 'backend_startpage', true );
@@ -121,5 +124,52 @@ class backend_startpage_customizer {
         $startpage = ( $_POST['backend_startpage'] );
         update_user_meta ( $user_id, 'backend_startpage', $startpage );
     }
-        
+
+    /**
+     * Add userlist column title
+     *
+     * Add the title to the userlist for the new startpage column
+     *
+     * @param array $defaults
+     * @return array
+     */
+    static public function add_user_list_url_head( $defaults ) {
+        $defaults[ 'backend-startpage' ]  = _x( 'Startpage', 'Userlist Columntitle', 'backend-startpage-customizer');
+        return $defaults;
+    }
+
+    /**
+     * Add the redirect url to userlist column
+     *
+     * @global $menu
+     * @global $submenu
+     * @param string $retval
+     * @param string $column_name
+     * @param integer $user_id
+     * @return string
+     */
+    static public function add_user_list_url_column( $retval, $column_name, $user_id ) {
+        global $menu, $submenu;
+        if ( $column_name == 'backend-startpage' ) {
+            $page = get_user_meta( $user_id, 'backend_startpage', true );
+            if ( $page != '' ) {
+                foreach ( $menu as $menuentry ) {
+;                    if ($menuentry[0] != '') {
+                        if ( $menuentry[ 2 ] == $page ) {
+                            $retval = esc_html( preg_replace( "/<.*>/","", $menuentry[ 0 ] ) );
+                        }
+                        if ( isset( $submenu[ $menuentry[ 2 ] ] ) && is_array( $submenu[ $menuentry[ 2 ] ] ) ) {
+                            foreach ( $submenu[ $menuentry[ 2 ] ] as $submenuentry ) {
+                                if ($submenuentry[2] == $page ) {
+                                    $retval = esc_html( preg_replace( "/<.*>/","", $submenuentry[ 0 ] ) );
+                                }
+                            }
+                        }
+                    }
+                }
+
+            }
+        }
+        return $retval;
+    }
 }

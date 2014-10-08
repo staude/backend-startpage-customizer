@@ -4,7 +4,7 @@ Donate link: http://www.staude.net/donate
 Tags: backend, startpage, customize, redirect, options, profile
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 0.4
+Stable tag: 0.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,16 +86,20 @@ Wähle das Projekt "WP Plugin: Backend Startpage Customizer" und trag deinen Wun
 
 == Changelog ==
 
+= 0.5 =
+- Admin can change startpage for any user. Thanks to TRILOS <service@trilos.de>
+- List startpage as column in user list
+
 = 0.4 =
-Disable some php notices if WP Debug active
+- Disable some php notices if WP Debug active
 
 = 0.3 =
-0000046: 500 - Crash nach uninstall
+- 0000046: 500 - Crash nach uninstall
 
 = 0.2 =
-0000020: add filter to change translations path
-0000026: correct translations to edit it with codestyling-localization
+- 0000020: add filter to change translations path
+- 0000026: correct translations to edit it with codestyling-localization
 
 = 0.1 =
-First version.
+- First version.
 
